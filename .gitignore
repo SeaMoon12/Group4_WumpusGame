@@ -90,7 +90,6 @@ Icon
 
 # VS Code files
 .vscode/
-!.vscode/tasks.json
 .history/
 
 # Visual Studio 2026 Hidden Folders
@@ -103,3 +102,7 @@ x86/
 *.opendb
 *.VC.db
 *.VC.opendb
+
+# Project Specific Binaries
+assets/WumpusGameBin
+WumpusGameBin

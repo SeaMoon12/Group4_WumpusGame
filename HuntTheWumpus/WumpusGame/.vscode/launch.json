@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Wumpus (Mac)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/assets/WumpusGameBin",
+            "cwd": "${workspaceFolder}/assets",
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Wumpus (Mac)"
+        }
+    ]
+}
