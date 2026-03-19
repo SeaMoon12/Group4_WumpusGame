@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="WumpusGame/WumpusGame.vcxproj" />
+  <Project Path="WumpusGame/WumpusGame.vcxproj" Id="9ad0eb68-c422-44ec-a500-fd5e2f7a92ae" />
 </Solution>

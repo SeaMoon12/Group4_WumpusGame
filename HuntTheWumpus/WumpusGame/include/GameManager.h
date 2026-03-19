@@ -3,13 +3,12 @@
 
 #include <libraries.h>
 
+enum GameState
+{
+};
+
 class GameManager
 {
-public:
-	GameManager();
-	void run();
-private:
-	bool running;
 };
 
 #endif

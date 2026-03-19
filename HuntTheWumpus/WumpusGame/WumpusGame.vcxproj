@@ -131,12 +131,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BottomlessPit.cpp" />
+    <ClCompile Include="src\Cave.cpp" />
+    <ClCompile Include="src\FileManager.cpp" />
+    <ClCompile Include="src\Hazard.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\driver.cpp" />
+    <ClCompile Include="src\SuperBat.cpp" />
+    <ClCompile Include="src\Wumpus.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BottomlessPit.h" />
+    <ClInclude Include="include\Cave.h" />
+    <ClInclude Include="include\FileManager.h" />
+    <ClInclude Include="include\Hazard.h" />
     <ClInclude Include="include\GameManager.h" />
     <ClInclude Include="include\libraries.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\SuperBat.h" />
+    <ClInclude Include="include\Wumpus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
