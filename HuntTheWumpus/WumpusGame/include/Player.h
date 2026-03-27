@@ -5,6 +5,7 @@
 
 class Player
 {
+	// initial
 };
 
 #endif
