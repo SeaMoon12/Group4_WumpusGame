@@ -9,6 +9,7 @@ enum GameState
 
 class GameManager
 {
+    // hi
 };
 
 #endif
