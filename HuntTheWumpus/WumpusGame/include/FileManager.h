@@ -5,6 +5,7 @@
 
 class FileManager
 {
+	// added code
 };
 
 #endif
