@@ -21,6 +21,7 @@ enum Tile
 
 class Cave
 {
+	// this is a code
 };
 
 #endif
