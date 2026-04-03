@@ -32,11 +32,12 @@ Cave::Cave(GameDifficulty gameDiff) { //weird because of UML error workarounds
 	else {
 		randomCave = false;
 	}
-	caveLogicVector.assign(20, vector<Tile>(20, Tile::EMPTY));
-	cavePositionVector.assign(20, vector<int>(20, -1));
-	map.assign(60, string(100, ' '));
-	generateCaveMap();
+	playerPosition = 0; 
+	caveLogicVector.assign(10, vector<Tile>(10, Tile::EMPTY));
+	cavePositionVector.assign(10, vector<int>(10, -1));
+	map.assign(30, string(50, ' '));	
 	cavesData.assign(cavePositionVector.size(), CaveProperties());
+	generateCaveMap();
 }
 
 //destructor
@@ -97,14 +98,15 @@ bool Cave::getRandomCave() {
 //member functions
 ///private funcs
 int Cave::countConnections(vector<vector<Tile>>& caveLogicVector, int x, int y) {
+	
 	int count = 0;
-	if (y - 2 >= 0 and caveLogicVector[y - 1][x] == Tile::V_TUNNEL) { 
-		count++; 
-	}
-	if (x + 2 < 20 and caveLogicVector[y][x + 1] == Tile::H_TUNNEL) {
+	if (y - 2 >= 0 and caveLogicVector[y - 1][x] == Tile::V_TUNNEL) {
 		count++;
 	}
-	if (y + 2 < 20 and caveLogicVector[y + 1][x] == Tile::V_TUNNEL) {
+	if (x + 2 < 10 and caveLogicVector[y][x + 1] == Tile::H_TUNNEL) {
+		count++;
+	}
+	if (y + 2 < 10 and caveLogicVector[y + 1][x] == Tile::V_TUNNEL) {
 		count++;
 	}
 	if (x - 2 >= 0 and caveLogicVector[y][x - 1] == Tile::H_TUNNEL) {
@@ -114,57 +116,60 @@ int Cave::countConnections(vector<vector<Tile>>& caveLogicVector, int x, int y) 
 }
 
 string Cave::directionToString(int dirIndex) {
+	
 	if (dirIndex == 0) {
 		return "NORTH";
 	}
-	if (dirIndex == 1) { 
+	if (dirIndex == 1) {
 		return "EAST";
 	}
 	if (dirIndex == 2) {
-		return "SOUTH"; 
+		return "SOUTH";
 	}
 	if (dirIndex == 3) {
-		return "WEST"; 
+		return "WEST";
 	}
 	else {
 		return "WEST";
 	}
 }
+
 void Cave::generateCaveMap() { //generates the cave positions, has a boolean to contro if its random or not
+	
 	if (randomCave == true) { //random cave gen using rejection sampling method
 		int attempts = 0; //so when making the map, it doesnt explode if it doesnt find one with the requested specs
 		while (attempts < 15000) {
 			attempts++;
 
 			//inits starting cave
-			caveLogicVector.assign(20, vector<Tile>(20, Tile::EMPTY));
+			caveLogicVector.assign(10, vector<Tile>(10, Tile::EMPTY));
 			cavePositionVector.clear();
-			
-			int startX = rand() % 20;
-			int startY = rand() % 20;
+
+			int startX = rand() % 10;
+			int startY = rand() % 10;
 
 			caveLogicVector[startY][startX] = Tile::CAVE;
 			cavePositionVector.push_back({ startX, startY });
-			
+
 			//directions and tunnel types for branching
 			int directionX[] = { 0, 2, 0, -2 }; //increment by 2 to account for tunnels
 			int directionY[] = { -2, 0, 2, 0 };
 			Tile tunnelType[] = { Tile::V_TUNNEL, Tile::H_TUNNEL, Tile::V_TUNNEL, Tile::H_TUNNEL };
 
 			while (cavePositionVector.size() < TOTAL_CAVES) { //cave generation loop
-			
+
 				int randomIndex = rand() % cavePositionVector.size(); //picks a random cave to branch off of
 				int currentX = cavePositionVector[randomIndex][0];
 				int currentY = cavePositionVector[randomIndex][1];
-			
+
 				int direction = rand() % 4; //picks a random direction to branch off of
 				int newX = currentX + directionX[direction];
 				int newY = currentY + directionY[direction];
-				if (newX >= 0 and newX < 20 and newY >= 0 and newY < 20 and caveLogicVector[newX][newY] == Tile::EMPTY) {
+				if (newX >= 0 and newX < 10 and newY >= 0 and newY < 10 and caveLogicVector[newY][newX] == Tile::EMPTY) {
 					caveLogicVector[newY][newX] = Tile::CAVE;
-					caveLogicVector[currentX + (directionX[direction] / 2)][currentY + (directionY[direction] / 2)] = tunnelType[direction];
+					caveLogicVector[currentY + (directionY[direction] / 2)][currentX + (directionX[direction] / 2)] = tunnelType[direction];
 					cavePositionVector.push_back({ newX, newY });
-				}	
+				}
 			}
 
 			for (int i = 0; i < cavePositionVector.size(); i++) { //link caves randomly so not all caves are connected
@@ -173,12 +178,12 @@ void Cave::generateCaveMap() { //generates the cave positions, has a boolean to 
 				for (int direction = 0; direction < 4; direction++) {
 					int adjX = currentX + directionX[direction];
 					int adjY = currentY + directionY[direction];
-					if (adjX >= 0 and adjX < 20 and adjY >= 0 and adjY < 20 and caveLogicVector[adjX][adjY] == Tile::CAVE) {
+					if (adjX >= 0 and adjX < 10 and adjY >= 0 and adjY < 10 and caveLogicVector[adjY][adjX] == Tile::CAVE) {
 						int tunnelX = currentX + (directionX[direction] / 2);
 						int tunnelY = currentY + (directionY[direction] / 2);
-						if (caveLogicVector[tunnelX][tunnelY] == Tile::EMPTY) {
+						if (caveLogicVector[tunnelY][tunnelX] == Tile::EMPTY) {
 							if (rand() % 100 > 30) {
-								caveLogicVector[tunnelX][tunnelY] = tunnelType[direction];
+								caveLogicVector[tunnelY][tunnelX] = tunnelType[direction];
 							}
 						}
 					}
@@ -215,27 +220,35 @@ void Cave::generateCaveMap() { //generates the cave positions, has a boolean to 
 				break;
 			}
 		}
-		
+
 	}
 	else if (randomCave == false) { //set wumpus map
-		int caveIDInc = 1;
-		int X = (TOTAL_CAVES / 5) * 2 - 1;
-		int Y = (TOTAL_CAVES / X) * 2 - 1;
-		for (int i = 0; i < X; i++) {
-			for (int j = 0; j < Y; j++) {
-				
-				caveLogicVector[i][j] = Tile::CAVE;
-				cavePositionVector[i][j] = caveIDInc;
-				
-				caveIDInc++;
-				j++; //inc by 2
-				if (j < Y) {
-					caveLogicVector[i][j] = Tile::H_TUNNEL;
+
+		caveLogicVector.assign(10, vector<Tile>(10, Tile::EMPTY));
+		cavePositionVector.clear();
+
+		int cavesX = TOTAL_CAVES / 5;
+		int cavesY = TOTAL_CAVES / cavesX;
+
+		int cavernX = cavesX * 2 - 1;
+		int cavernY = cavesY * 2 - 1;
+
+		for (int y = 0; y < cavernX; y++) {
+			for (int x = 0; x < cavernY; x++) {
+				if (y % 2 == 0) {
+					if (x % 2 == 0) {
+						caveLogicVector[y][x] = Tile::CAVE;
+						cavePositionVector.push_back({ x, y });
+					}
+					else {
+						caveLogicVector[y][x] = Tile::H_TUNNEL;
+					}
 				}
-			}
-			i++; //inc by 2
-			if (i < X) {
-				caveLogicVector[i] = vector<Tile>(Y, Tile::V_TUNNEL);
+				else {
+					if (x % 2 == 0) {
+						caveLogicVector[y][x] = Tile::V_TUNNEL;
+					}
+				}
 			}
 		}
 	}
@@ -243,7 +256,8 @@ void Cave::generateCaveMap() { //generates the cave positions, has a boolean to 
 }
 
 void Cave::linkCaves() { //links caves in cavesData based on the caveLogicVector and cavePositionVector
-	vector<vector<int>>& const CAVE_POS_REF = cavePositionVector; //read only 
+	
+	cavesData.assign(cavePositionVector.size(), CaveProperties());
 
 	//convert to int to store in cavesData.connectedCaves vector, -1 is none
 	int const NORTH = static_cast<int>(TunnelDirections::NORTH);
@@ -251,30 +265,40 @@ void Cave::linkCaves() { //links caves in cavesData based on the caveLogicVector
 	int const SOUTH = static_cast<int>(TunnelDirections::SOUTH);
 	int const WEST = static_cast<int>(TunnelDirections::WEST);
 
-	for (int i = 0; i < cavePositionVector.size(); i++) { 
+	vector<vector<int>> idLookupGrid(10, vector<int>(10, -1));
+
+	for (int i = 0; i < cavePositionVector.size(); i++) {
+		int cx = cavePositionVector[i][0];
+		int cy = cavePositionVector[i][1];
+		idLookupGrid[cy][cx] = i;
+	}
+
+	for (int i = 0; i < cavePositionVector.size(); i++) {
+		cavesData[i].cavePosition = i;
 		int currentX = cavePositionVector[i][0];
 		int currentY = cavePositionVector[i][1];
-		int currentId = CAVE_POS_REF[currentX][currentY];
-		if (currentY - 2 >= 0 and caveLogicVector[currentX - 1][currentY] == Tile::V_TUNNEL) {
-			cavesData[currentId].connectedCaves[NORTH] = CAVE_POS_REF[currentX - 2][currentY];
+		int currentId = i;
+		cavesData[currentId].connectedCaves.assign(4, -1);
+		if (currentY - 2 >= 0 and caveLogicVector[currentY - 1][currentX] == Tile::V_TUNNEL) {
+			cavesData[currentId].connectedCaves[NORTH] = idLookupGrid[currentY - 2][currentX];
 		}
 		else {
 			cavesData[currentId].connectedCaves[NORTH] = -1;
 		}
-		if (currentX + 2 < 20 and caveLogicVector[currentX][currentY + 1] == Tile::H_TUNNEL) {
-			cavesData[currentId].connectedCaves[EAST] = CAVE_POS_REF[currentX][currentY + 2];
+		if (currentX + 2 < 10 and caveLogicVector[currentY][currentX + 1] == Tile::H_TUNNEL) {
+			cavesData[currentId].connectedCaves[EAST] = idLookupGrid[currentY][currentX + 2];
 		}
 		else {
 			cavesData[currentId].connectedCaves[EAST] = -1;
 		}
-		if (currentY + 2 < 20 and caveLogicVector[currentX + 1][currentY] == Tile::V_TUNNEL) {
-			cavesData[currentId].connectedCaves[SOUTH] = CAVE_POS_REF[currentX + 2][currentY];
+		if (currentY + 2 < 10 and caveLogicVector[currentY + 1][currentX] == Tile::V_TUNNEL) {
+			cavesData[currentId].connectedCaves[SOUTH] = idLookupGrid[currentY + 2][currentX];
 		}
 		else {
 			cavesData[currentId].connectedCaves[SOUTH] = -1;
 		}
-		if (currentX - 2 >= 0 and caveLogicVector[currentX][currentY - 1] == Tile::H_TUNNEL) {
-			cavesData[currentId].connectedCaves[WEST] = CAVE_POS_REF[currentX][currentY - 2];
+		if (currentX - 2 >= 0 and caveLogicVector[currentY][currentX - 1] == Tile::H_TUNNEL) {
+			cavesData[currentId].connectedCaves[WEST] = idLookupGrid[currentY][currentX - 2];
 		}
 		else {
 			cavesData[currentId].connectedCaves[WEST] = -1;
@@ -283,43 +307,46 @@ void Cave::linkCaves() { //links caves in cavesData based on the caveLogicVector
 	}
 
 	//test to see if it connects
-	for (int i = 0; i < cavesData.size(); i++) {
-		cout << "Cave ID: " << cavesData[i].cavePosition << " | Exits -> ";
-		for (int d = 0; d < 4; d++) {
-			int targetId = cavesData[i].connectedCaves[d];
-			if (targetId != -1) { // Only print if a tunnel actually exists!
-				cout << "[" << directionToString(d) << " to Cave " << targetId << "] ";
-			}
-		}
-		cout << "\n";
-	}
+
+	//for (int i = 0; i < cavesData.size(); i++) {
+	//	cout << "Cave ID: " << cavesData[i].cavePosition << " | Exits -> ";
+	//	for (int d = 0; d < 4; d++) {
+	//		int targetId = cavesData[i].connectedCaves[d];
+	//		if (targetId != -1) { // Only print if a tunnel actually exists!
+	//			cout << "[" << directionToString(d) << " to Cave " << targetId << "] ";
+	//		}
+	//	}
+	//	cout << "\n";
+	//}
 
 }
 
 void Cave::renderMap() { //render the map based on the caveLogicVector, cavePositionVector and cavesData
+	
 	int playerX = cavePositionVector[playerPosition][0];
 	int playerY = cavePositionVector[playerPosition][1];
-	for (int x = 0; x < 20; ++x) {
-		for (int y = 0; y < 20; ++y) {
-			Tile currentTile = caveLogicVector[x][y];
+	for (int y = 0; y < 10; ++y) {
+		for (int x = 0; x < 10; ++x) {
+			Tile currentTile = caveLogicVector[y][x];
 			if (currentTile == Tile::EMPTY) {
 				continue;
 			}
 			int drawY = y * 3;
 			int drawX = x * 5;
-			
-			if (caveLogicVector[x][y] == CAVE) {
-				bool isNorthOpen = (y - 1 >= 0 and caveLogicVector[x][y - 1] == Tile::V_TUNNEL);
-				bool isSouthOpen = (y + 1 < 20 and caveLogicVector[x][y + 1] == Tile::V_TUNNEL);
-				bool isWestOpen = (x - 1 >= 0 and caveLogicVector[x - 1][y] == Tile::H_TUNNEL);
-				bool isEastOpen = (x + 1 < 20 and caveLogicVector[x + 1][y] == Tile::H_TUNNEL);
 
-				string roof, topString, midString, bottomString;
+			if (caveLogicVector[y][x] == CAVE) {
+				bool isNorthOpen = (y - 1 >= 0 and caveLogicVector[y - 1][x] == Tile::V_TUNNEL);
+				bool isSouthOpen = (y + 1 < 10 and caveLogicVector[y + 1][x] == Tile::V_TUNNEL);
+				bool isWestOpen = (x - 1 >= 0 and caveLogicVector[y][x - 1] == Tile::H_TUNNEL);
+				bool isEastOpen = (x + 1 < 10 and caveLogicVector[y][x + 1] == Tile::H_TUNNEL);
+
+				string topString, midString, bottomString;
 				if (isNorthOpen == false) {
-					roof = " ___ ";
+					topString = "/---\\";
 				}
-
-				topString = "/   \\";
+				else {
+					topString = "/   \\";
+				}
 
 				if (playerX == x and playerY == y) {
 					midString = "  O  ";
@@ -348,7 +375,6 @@ void Cave::renderMap() { //render the map based on the caveLogicVector, cavePosi
 				else {
 					bottomString = "\\___/";
 				}
-
 				map[drawY].replace(drawX, 5, topString);
 				map[drawY + 1].replace(drawX, 5, midString);
 				map[drawY + 2].replace(drawX, 5, bottomString);
@@ -365,17 +391,41 @@ void Cave::renderMap() { //render the map based on the caveLogicVector, cavePosi
 				map[drawY + 2].replace(drawX, 5, " | | ");
 				continue;
 			}
-			
+
 		}
-		for (int i = 0; i < 60; ++i) {
-			cout << map[i] << "\n";
+	}
+
+	vector<vector<bool>> visitedGrid(10, vector<bool>(10, false)); //cave visited check
+	for (int i = 0; i < cavesData.size(); i++) {
+		if (cavesData[i].caveVisited == true) {
+			int cx = cavePositionVector[i][0];
+			int cy = cavePositionVector[i][1];
+			visitedGrid[cy][cx] = true;
 		}
+	}
+
+	for (int drawY = 0; drawY < 30; ++drawY) {
+		for (int drawX = 0; drawX < 50; ++drawX) {
+
+			int gridX = drawX / 5;
+			int gridY = drawY / 3;
+
+			if (gridX < 10 and gridY < 10 and visitedGrid[gridY][gridX] == true) { //print red if visited
+				cout << "\033[31m" << map[drawY][drawX] << "\033[0m";
+			}
+			// Otherwise, print normally
+			else {
+				cout << map[drawY][drawX];
+			}
+		}
+		cout << "\n"; // End of the row
 	}
 }
 
-//for gamemanager class, make a CaveProperties vector, assign the index according to player pos or hazard movement, then pass that as an arg here, sorry
+//for gameManager class, do getCavesData, update the index of the cave you want updated, then pass the whole vector back to updateCaveMap to update the caveData in Cave class. also updates caveVisited if player is in that cave
 void Cave::updateCaveMap(vector<CaveProperties> newCavesData) { //updates caveData such as changing caveHzards or caveVisted, the arg shouldve been a single caveProperties struct
-	for (int i = 0; i < cavesData.size(); i++) {
-		cavesData[i] = newCavesData[i];
+	cavesData = newCavesData;
+	if (playerPosition >= 0 and playerPosition < cavesData.size()) {
+		cavesData[playerPosition].caveVisited = true;
 	}
 }
