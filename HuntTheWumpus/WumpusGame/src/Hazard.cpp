@@ -24,9 +24,9 @@ Student Signature: <mention your full name here>
 
 #include "Hazard.h"
 
-int Hazard::activeHazardCount = 0;
+int Hazard::activeHazardCount = 0; // initialize static var
 
-Hazard::Hazard() : roomID(0) {
+Hazard::Hazard() : roomID(0) { // initialize roomID to 0 by default
     activeHazardCount++;
 }
 

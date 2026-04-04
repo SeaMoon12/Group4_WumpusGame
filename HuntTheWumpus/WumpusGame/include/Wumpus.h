@@ -14,8 +14,8 @@ public:
 	string getHazardName() override;
 	string getHazardWarning() override;
 
-	void startle();
-	void roam();
+	void startle(int roomID);
+	void roam(int roomID);
 
 	~Wumpus() override;
 private:

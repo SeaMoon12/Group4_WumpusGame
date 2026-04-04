@@ -23,3 +23,36 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "Wumpus.h"
+
+Wumpus::Wumpus(float movementChance) : isAwake(false) {
+	chanceToMove = movementChance;
+}
+
+void Wumpus::encounter() {
+	cout << "The Wumpus has woken up! You have been eaten.\n";
+	// should've killed player, but that's handled in GameManager
+}
+
+string Wumpus::getHazardName() {
+	return "Wumpus";
+}
+
+string Wumpus::getHazardWarning() {
+	return "You smell a terrible stench...\n";
+}
+
+void Wumpus::startle(int id) {
+	isAwake = true;
+
+	// arrow missing handled in GameManager -> if missed, 75% wake up
+	int roll = rand() % 100;
+	if (roll < (chanceToMove * 100)) {
+		roam(id);
+	}
+}
+
+void Wumpus::roam(int id) {
+	setRoomID(id);
+}
+
+Wumpus::~Wumpus() {}
