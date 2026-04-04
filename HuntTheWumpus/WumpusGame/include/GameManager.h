@@ -1,68 +1,52 @@
-#ifndef GAME_MANAGER_H
-#define GAME_MANAGER_H
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
 
-#include <libraries.h>
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <cctype>
 #include "Player.h"
 #include "Cave.h"
-#include "Hazard.h"
 #include "FileManager.h"
-using namespace std;
+#include "Hazard.h"
+#include "Wumpus.h"
+#include "BottomlessPit.h"
+#include "SuperBat.h"
+#include "libraries.h"
 
+//enumeration exactly as defined in the uml
 enum GameState {
-    RUNNING,
-    WON,
-    LOST,
-    MENU
+    RUNNING, WON, LOST, MENU
 };
 
-class GameManager
-{
-        // hi
-    private:
-        Player player;
-        Cave cave;
-        vector<Hazard*> hazards;
-        FileManager fileManager;
+class GameManager {
+private:
+    Player player;
+    Cave caveMap;
+    std::vector<Hazard*> hazards;
+    FileManager fileManager;
+    GameState gameState;
+    int turnCount;
+    bool cheatMode;
 
-        GameState gameState;
-        int turnCount;
-        bool cheatMode;
+    //helper function to print narrative text character by character
+    void printSlow(const std::string& text, int delayMs);
 
-    public:
-        GameManager();
+public:
+    //constructor
+    GameManager();
 
-        void run();
+    //core execution
+    void run();
 
-        void showMainMenu();
+    //menu operations
+    void showMainMenu();
+    void startNewGame();
+    void loadGame();
+    void saveGame();
 
-        void startNewGame();
-
-        void gameLoop();
-
-        void processTurn();
-
-        void handleMove(char direction);
-
-        void handleShoot(char direction);
-
-        void checkNearbyWarnings();
-
-        void checkHazards();
-
-        void checkWinLose();
-
-        void showInGameMenu();
-
-        void loadGame();
-        void saveGame();
-
-        void endGame();
-
+    //gameplay operations
+    void gameLoop();
+    void processTurn();
+    void checkWinLose();
+    void endGame();
+    void toggleCheat();
 };
 
-#endif;
+#endif

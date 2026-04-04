@@ -2,9 +2,9 @@
 FITS1201 – Object-Oriented Programming
 UNJI GAMES Assignment – Version 1
 Academic Integrity Declaration
-Student Name: Simmon Priady Sasmita
-Student ID: 251103130118
-Submission Date: 4 April 2026
+Student Name: ______________________________
+Student ID: ______________________________
+Submission Date: ___________________________
 I declare that:
 1. This assignment is entirely my own original work.
 2. I have not copied code from other students, websites, AI tools,
@@ -19,18 +19,14 @@ code.
 6. I understand that failure to comply with these requirements may result
  in academic misconduct proceedings and penalties, including a mark of
  zero for this assignment.
-Student Signature: Simmon Priady Sasmita
+Student Signature: <mention your full name here>
 ********************************************************************/
 #include "GameManager.h"
 
-#include "BottomlessPit.h"
-#include "Wumpus.h"
-#include "SuperBat.h"
-
 int main()
 {
-	string playerName = "";
-	cout << "Enter your name: ";
-	cin >> playerName;
+	srand(static_cast<unsigned int>(time(0))); //for random map gen and hazard placements, as well as lantern oil
+	GameManager wumpusGame;
+	wumpusGame.run();
 	return 0;
 }

@@ -10,6 +10,7 @@
 
 class Player
 {
+    // commit first
 private:
     // player attributes
     std::string playerName;
@@ -39,6 +40,7 @@ public:
     int getLanternOil();
     void useArrow();
     void useMagicArrow();
+    void setMagicArrows(int amount);
     int getArrows();
     int getMagicArrows();
     bool isOutofOil();

@@ -32,11 +32,12 @@ Cave::Cave(GameDifficulty gameDiff) { //weird because of UML error workarounds
 	else {
 		randomCave = false;
 	}
-	playerPosition = 0; 
+	playerPosition = 0;
 	caveLogicVector.assign(10, vector<Tile>(10, Tile::EMPTY));
 	cavePositionVector.assign(10, vector<int>(10, -1));
-	map.assign(30, string(50, ' '));	
+	map.assign(30, string(50, ' '));
 	cavesData.assign(cavePositionVector.size(), CaveProperties());
+	generateCaveMap();
 }
 
 //destructor
@@ -97,7 +98,7 @@ bool Cave::getRandomCave() {
 //member functions
 ///private funcs
 int Cave::countConnections(vector<vector<Tile>>& caveLogicVector, int x, int y) {
-	
+
 	int count = 0;
 	if (y - 2 >= 0 and caveLogicVector[y - 1][x] == Tile::V_TUNNEL) {
 		count++;
@@ -115,7 +116,7 @@ int Cave::countConnections(vector<vector<Tile>>& caveLogicVector, int x, int y) 
 }
 
 string Cave::directionToString(int dirIndex) {
-	
+
 	if (dirIndex == 0) {
 		return "NORTH";
 	}
@@ -134,7 +135,7 @@ string Cave::directionToString(int dirIndex) {
 }
 
 void Cave::generateCaveMap() { //generates the cave positions, has a boolean to contro if its random or not
-	
+
 	if (randomCave == true) { //random cave gen using rejection sampling method
 		int attempts = 0; //so when making the map, it doesnt explode if it doesnt find one with the requested specs
 		while (attempts < 15000) {
@@ -255,7 +256,7 @@ void Cave::generateCaveMap() { //generates the cave positions, has a boolean to 
 }
 
 void Cave::linkCaves() { //links caves in cavesData based on the caveLogicVector and cavePositionVector
-	
+
 	cavesData.assign(cavePositionVector.size(), CaveProperties());
 
 	//convert to int to store in cavesData.connectedCaves vector, -1 is none
@@ -320,8 +321,8 @@ void Cave::linkCaves() { //links caves in cavesData based on the caveLogicVector
 
 }
 
-void Cave::renderMap() { //render the map based on the caveLogicVector, cavePositionVector and cavesData
-	
+void Cave::renderMap(bool cheatMode) { //render the map based on the caveLogicVector, cavePositionVector and cavesData
+
 	int playerX = cavePositionVector[playerPosition][0];
 	int playerY = cavePositionVector[playerPosition][1];
 	for (int y = 0; y < 10; ++y) {
@@ -347,14 +348,24 @@ void Cave::renderMap() { //render the map based on the caveLogicVector, cavePosi
 					topString = "/   \\";
 				}
 
+				midString = "     ";
+
+				int currentCaveId = -1;
+				for (int i = 0; i < cavePositionVector.size(); i++) {
+					if (cavePositionVector[i][0] == x and cavePositionVector[i][1] == y) {
+						currentCaveId = i;
+						break;
+					}
+				}
+
+				if (cheatMode and currentCaveId != -1) {
+					if (cavesData[currentCaveId].caveHazards == WUMPUS) midString[1] = 'W';
+					else if (cavesData[currentCaveId].caveHazards == PIT) midString[1] = 'P';
+					else if (cavesData[currentCaveId].caveHazards == BATS) midString[1] = 'B';
+				}
+
 				if (playerX == x and playerY == y) {
-					midString = "  O  ";
-				}
-				else if (cavesData[x].caveHazards == CaveHazards::WUMPUS) {
-					midString = "  W  ";
-				}
-				else {
-					midString = "     ";
+					midString[2] = 'O';
 				}
 
 				if (isWestOpen == true) {
@@ -399,7 +410,7 @@ void Cave::renderMap() { //render the map based on the caveLogicVector, cavePosi
 
 	vector<vector<bool>> visitedGrid(10, vector<bool>(10, false)); //cave visited check
 	for (int i = 0; i < cavesData.size(); i++) {
-		if (cavesData[i].caveVisited == true) {
+		if (cavesData[i].caveVisited == true || cheatMode) {
 			int cx = cavePositionVector[i][0];
 			int cy = cavePositionVector[i][1];
 			visitedGrid[cy][cx] = true;
