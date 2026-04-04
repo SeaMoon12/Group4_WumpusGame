@@ -55,6 +55,7 @@ int Player::getCurrentCaveID() {
 	return currentCaveID;
 }
 
+void Player::addVisitedCave(int caveID) {
 void Player::addVisitedCave(int caveID) { 
 	cavesExplored++;
 }
@@ -68,7 +69,7 @@ void Player::consumeLanternOil() {
 	lanternOil -= reduction;
 
 	//to make sure that the lantern oil never goes negative
-	if (lanternOil < 0) { 
+	if (lanternOil < 0) {
 		lanternOil = 0;
 	}
 }
@@ -93,7 +94,7 @@ int Player::getArrows() {
 	return arrows;
 }
 
-int Player::getMagicArrows () {
+int Player::getMagicArrows() {
 	return magicArrows;
 }
 

@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "libraries.h"
 #include <iostream>
 #include <vector>
 #include <string>

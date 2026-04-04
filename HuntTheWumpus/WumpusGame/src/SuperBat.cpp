@@ -23,3 +23,21 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "SuperBat.h"
+
+SuperBat::SuperBat(float movementChance) : chanceToMove(movementChance) {}
+
+void SuperBat::encounter() {
+	cout << "Super bats grab you and carry you away!\n";
+}
+
+string SuperBat::getHazardName() {
+	return "Super Bat";
+}
+
+string SuperBat::getHazardWarning() {
+	return "You hear the flapping of wings...\n";
+}
+
+void SuperBat::roam(int id) {
+	setRoomID(id);
+}
