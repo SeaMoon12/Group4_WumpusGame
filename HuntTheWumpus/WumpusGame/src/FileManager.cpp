@@ -34,57 +34,16 @@ Student Signature: John Matthew Myers Hamid
 
 using namespace std;
 
-// Initialize all paths pointing strictly to the assets folder
+//constructor: initialize file paths securely to assets folder
 FileManager::FileManager() {
-    mapFile = "assets/map.txt";
     saveFile = "assets/save.txt";
     scoreFile = "assets/scores.txt";
     howToPlayFile = "assets/howtoplay.txt";
     storyFile = "assets/story.txt";
 }
 
-// Read the static map file and return properties for Gerrard's Cave class
-vector<CaveProperties> FileManager::loadMap() {
-    vector<CaveProperties> caves;
-    ifstream file(mapFile);
-
-    if (!file.is_open()) {
-        cout << RED << "Error: Could not open map file." << RESETCOLOR << endl;
-        return caves;
-    }
-
-    string line;
-    getline(file, line);
-    int totalCaves = stoi(line);
-
-    while (getline(file, line)) {
-        if (line.empty()) continue;
-
-        stringstream ss(line);
-        string token;
-        CaveProperties cave;
-
-        getline(ss, token, ',');
-        cave.cavePosition = stoi(token);
-
-        cave.connectedCaves.resize(4, -1);
-        for (int i = 0; i < 4; i++) {
-            getline(ss, token, ',');
-            cave.connectedCaves[i] = stoi(token);
-        }
-
-        cave.caveVisited = false;
-        cave.caveHazards = CaveHazards::NONE;
-
-        caves.push_back(cave);
-    }
-
-    file.close();
-    return caves;
-}
-
-// Write the dynamic game state (Player, Turns, Hazards) to the save file
-void FileManager::saveGame(Player& player, vector<Hazard*>& hazards, int turns) {
+//savegame: write complete game state to save file
+void FileManager::saveGame(Player& player, vector<Hazard*>& hazards, int turns, vector<CaveProperties>& cavesData) {
     ofstream file(saveFile);
 
     if (!file.is_open()) {
@@ -92,19 +51,34 @@ void FileManager::saveGame(Player& player, vector<Hazard*>& hazards, int turns) 
         return;
     }
 
+    //save player state
     file << player.getSaveData() << "\n";
+
+    //save turns taken
     file << turns << "\n";
 
+    //save hazards
     file << hazards.size() << "\n";
     for (int i = 0; i < hazards.size(); i++) {
         file << hazards[i]->getHazardName() << "," << hazards[i]->getRoomID() << "\n";
+    }
+
+    //save gerrard's dynamically generated cave map
+    file << cavesData.size() << "\n";
+    for (int i = 0; i < cavesData.size(); i++) {
+        file << cavesData[i].cavePosition << ","
+            << cavesData[i].connectedCaves[0] << "," //north
+            << cavesData[i].connectedCaves[1] << "," //east
+            << cavesData[i].connectedCaves[2] << "," //south
+            << cavesData[i].connectedCaves[3] << "," //west
+            << cavesData[i].caveVisited << "\n";
     }
 
     file.close();
     cout << LIGHT_BLUE << "Game saved successfully." << RESETCOLOR << endl;
 }
 
-// Return the entire save file content as a single string for GameManager to parse
+//loadgame: read save file and return as string
 string FileManager::loadGame() {
     ifstream file(saveFile);
     string result = "";
@@ -114,6 +88,7 @@ string FileManager::loadGame() {
         return result;
     }
 
+    //read entire save file into string
     string line;
     while (getline(file, line)) {
         result += line + "\n";
@@ -123,9 +98,9 @@ string FileManager::loadGame() {
     return result;
 }
 
-// Append a new winning score securely
+//savescore: append player's name and score
 void FileManager::saveScore(const string& name, int score) {
-    ofstream file(scoreFile, ios::app);
+    ofstream file(scoreFile, ios::app); //ios::app ensures we don't overwrite old scores
 
     if (!file.is_open()) {
         cout << RED << "Error: Could not open scores file." << RESETCOLOR << endl;
@@ -136,7 +111,7 @@ void FileManager::saveScore(const string& name, int score) {
     file.close();
 }
 
-// Return formatted list of all past scores
+//loadscores: read and format all saved scores
 string FileManager::loadScores() {
     ifstream file(scoreFile);
     string result = "";
@@ -149,6 +124,7 @@ string FileManager::loadScores() {
     string line;
     int rank = 1;
 
+    //parse and format each score with rank
     while (getline(file, line)) {
         if (line.empty()) continue;
 
@@ -166,7 +142,7 @@ string FileManager::loadScores() {
     return result;
 }
 
-// Return tutorial text
+//loadhowtoplay: read how to play text file
 string FileManager::loadHowToPlay() {
     ifstream file(howToPlayFile);
     string result = "";
@@ -185,7 +161,7 @@ string FileManager::loadHowToPlay() {
     return result;
 }
 
-// Return story text for dynamic printing
+//loadstory: read story text file for dynamic printing
 string FileManager::loadStory() {
     ifstream file(storyFile);
     string result = "";

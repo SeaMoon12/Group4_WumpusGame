@@ -4,13 +4,12 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "Cave.h"    
-#include "Player.h"
-#include "Hazard.h"  
+#include "Cave.h"    //requires caveproperties struct
+#include "Player.h"  //requires  player class
+#include "Hazard.h"  //requires hazard class
 
 class FileManager {
 private:
-    std::string mapFile;
     std::string saveFile;
     std::string scoreFile;
     std::string howToPlayFile;
@@ -19,8 +18,9 @@ private:
 public:
     FileManager();
 
-    std::vector<CaveProperties> loadMap();
-    void saveGame(Player& player, std::vector<Hazard*>& hazards, int turns);
+    //signature includes gerrard's dynamic cave map
+    void saveGame(Player& player, std::vector<Hazard*>& hazards, int turns, std::vector<CaveProperties>& cavesData);
+
     std::string loadGame();
     void saveScore(const std::string& name, int score);
     std::string loadScores();
