@@ -10,7 +10,6 @@
 
 class Player
 {
-    // commit first
 private:
     // player attributes
     std::string playerName;

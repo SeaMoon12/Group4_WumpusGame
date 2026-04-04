@@ -2,9 +2,9 @@
 FITS1201 – Object-Oriented Programming
 UNJI GAMES Assignment – Version 1
 Academic Integrity Declaration
-Student Name: ______________________________
-Student ID: ______________________________
-Submission Date: ___________________________
+Student Name: Akshay Raufa Kumar
+Student ID: 251103120140
+Submission Date: April 4, 2026
 I declare that:
 1. This assignment is entirely my own original work.
 2. I have not copied code from other students, websites, AI tools,
@@ -19,7 +19,7 @@ code.
 6. I understand that failure to comply with these requirements may result
  in academic misconduct proceedings and penalties, including a mark of
  zero for this assignment.
-Student Signature: <mention your full name here>
+Student Signature: Akshay Raufa Kumar 
 ********************************************************************/
 
 #include "Player.h"
@@ -56,6 +56,7 @@ int Player::getCurrentCaveID() {
 }
 
 void Player::addVisitedCave(int caveID) {
+void Player::addVisitedCave(int caveID) { 
 	cavesExplored++;
 }
 
@@ -130,7 +131,7 @@ bool Player::hasItem(const string& item) {
 }
 
 vector<string> Player::getInventory() {
-	return inventory;
+	return inventory; 
 }
 
 string Player::getPlayerName() {
@@ -189,11 +190,9 @@ void Player::calculateScore(int turns, int diff) {
 	double difficultyMultiplier;
 	if (diff == 1) {
 		difficultyMultiplier = 1.0; //Rookie
-	}
-	else if (diff == 2) {
+	} else if (diff == 2) {
 		difficultyMultiplier = 1.5; //Hunter
-	}
-	else if (diff == 3) {
+	} else if (diff == 3) {
 		difficultyMultiplier = 2.0; //Master Hunter
 	}
 	//static cast for converting the final score from double to integer.
@@ -209,14 +208,14 @@ int Player::getScore() {
 string Player::getSaveData() {
 	stringstream ss;
 	ss << playerName << ","
-		<< currentCaveID << ","
-		<< arrows << ","
-		<< magicArrows << ","
-		<< lanternOil << ","
-		<< isAlive << ","
-		<< score << ","
-		<< cavesExplored << ","
-		<< inventory.size();
+	   << currentCaveID << ","
+	   << arrows << ","
+	   << magicArrows << ","
+	   << lanternOil << ","
+	   << isAlive << ","
+	   << score << ","
+	   << cavesExplored << ","
+	   << inventory.size();
 
 	//append each inventory item after the count
 	for (int i = 0; i < inventory.size(); i++) {
