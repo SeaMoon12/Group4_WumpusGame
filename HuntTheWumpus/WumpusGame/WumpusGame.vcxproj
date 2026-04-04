@@ -152,6 +152,10 @@
     <ClInclude Include="include\SuperBat.h" />
     <ClInclude Include="include\Wumpus.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\howToPlay.txt" />
+    <Text Include="assets\story.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,35 +1,31 @@
-#ifndef FILE_MANAGER_H
-#define FILE_MANAGER_H
+#ifndef FILEMANAGER_H
+#define FILEMANAGER_H
 
-#include "libraries.h"
-#include "Cave.h"
-#include "Player.h"
-#include "Hazard.h"
+#include <string>
+#include <vector>
+#include <fstream>
+#include "Cave.h"    //requires caveproperties struct
+#include "Player.h"  //requires  player class
+#include "Hazard.h"  //requires hazard class
 
 class FileManager {
 private:
-    string mapFile;
-    string saveFile;
-    string scoreFile;
-    string howToPlayFile;
-    string storyFile;
+    std::string saveFile;
+    std::string scoreFile;
+    std::string howToPlayFile;
+    std::string storyFile;
 
 public:
     FileManager();
 
-    vector<CaveProperties> loadMap();
+    //signature includes gerrard's dynamic cave map
+    void saveGame(Player& player, std::vector<Hazard*>& hazards, int turns, std::vector<CaveProperties>& cavesData);
 
-    string loadHowToPlay();
-
-    void saveGame(Player& player, vector<Hazard>& hazards, int turns);
-
-    string loadGame();
-
-    void saveScore(string name, int score);
-
-    string loadScores();
-
-    string loadStory();
+    std::string loadGame();
+    void saveScore(const std::string& name, int score);
+    std::string loadScores();
+    std::string loadHowToPlay();
+    std::string loadStory();
 };
 
 #endif
