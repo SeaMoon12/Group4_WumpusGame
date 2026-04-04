@@ -2,9 +2,25 @@
 #define WUMPUS_H
 
 #include "libraries.h"
+#include "Hazard.h"
 
-class Wumpus
+class Wumpus : public Hazard
 {
+public:
+	Wumpus(float movementChance);
+	void encounter() override;
+
+	// GETTERS
+	string getHazardName() override;
+	string getHazardWarning() override;
+
+	void startle(int roomID);
+	void roam(int roomID);
+
+	~Wumpus() override;
+private:
+	bool isAwake;
+	float chanceToMove;
 };
 
 #endif
