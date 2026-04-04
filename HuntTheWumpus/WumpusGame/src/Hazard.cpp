@@ -23,3 +23,25 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "Hazard.h"
+
+int Hazard::activeHazardCount = 0; // initialize static var
+
+Hazard::Hazard() : roomID(0) { // initialize roomID to 0 by default
+    activeHazardCount++;
+}
+
+int Hazard::getRoomID() {
+    return roomID;
+}
+
+int Hazard::getActiveHazardCount() {
+    return activeHazardCount;
+}
+
+void Hazard::setRoomID(int id) {
+    roomID = id;
+}
+
+Hazard::~Hazard() {
+    activeHazardCount--;
+}

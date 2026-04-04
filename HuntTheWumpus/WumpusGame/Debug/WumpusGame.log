@@ -1,0 +1,30 @@
+﻿  BottomlessPit.cpp
+  Cave.cpp
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(10,14): error C3646: 'caveHazards': unknown override specifier
+  (compiling source file 'src/Cave.cpp')
+  
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(10,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Cave.cpp')
+  
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(48,15): warning C4091: 'static ': ignored on left of 'Cave::GameDifficulty' when no variable is declared
+  (compiling source file 'src/Cave.cpp')
+  
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(169,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(188,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(246,21): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(254,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(286,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\src\Cave.cpp(379,20): warning C4018: '<': signed/unsigned mismatch
+  FileManager.cpp
+  Hazard.cpp
+  driver.cpp
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(10,14): error C3646: 'caveHazards': unknown override specifier
+  (compiling source file 'src/driver.cpp')
+  
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(10,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/driver.cpp')
+  
+C:\Users\Infinix\source\repos\HuntTheWumpus\HuntTheWumpus\WumpusGame\include\Cave.h(48,15): warning C4091: 'static ': ignored on left of 'Cave::GameDifficulty' when no variable is declared
+  (compiling source file 'src/driver.cpp')
+  
+  Generating Code...
