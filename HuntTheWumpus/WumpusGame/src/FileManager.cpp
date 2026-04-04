@@ -23,3 +23,12 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "FileManager.h"
+#include "fstream"
+#include "iostream"
+
+FileManager::FileManager() {
+	mapFile = "map.txt";
+	saveFile = "saveGame.txt";
+	scorefile = "scores.txt";
+	howToPlayFile = "howtoplay.txt";
+}
