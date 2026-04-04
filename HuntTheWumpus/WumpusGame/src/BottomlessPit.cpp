@@ -23,3 +23,19 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "BottomlessPit.h"
+
+BottomlessPit::BottomlessPit() {};
+
+void BottomlessPit::encounter() {
+	cout << "You fall into a bottomless pit.\n";
+}
+
+string BottomlessPit::getHazardName() {
+	return "Bottomless Pit";
+}
+
+string BottomlessPit::getHazardWarning() {
+	return "You feel a cold wind blowing...";
+}
+
+BottomlessPit::~BottomlessPit() {}
