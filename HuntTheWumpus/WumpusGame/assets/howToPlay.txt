@@ -1,0 +1,42 @@
+HOW TO PLAY
+In Hunt the Wumpus, the player’s main objective is to hunt down and kill the Wumpus using a limited set of resources, while avoiding the deadly traps hidden across a network of 20 interconnected caves.
+
+Game Objective: Navigate through the cave system, deduce the location of the Wumpus using environmental warnings, and shoot it with an arrow before running out of resources. The player can only shoot at an adjacent cave.
+
+Controls: The player can navigate the caves through these buttons:
+‘W’ = North
+‘A’ = West
+‘S’ = South
+‘D’ = East
+To fire an arrow, the player can press this button, then press a navigation button to select the shot direction:
+‘F’ = Fire normal arrow
+‘J’ = Fire magic arrow
+To open the in-game menu, press:
+‘X’ = Menu
+The in-game menu will allow the player to save, load, view inventory, or exit the game.
+
+Resources: The player starts with 5 arrows, 100 units of lantern oil, a bow, and a map. Every action taken will consume some lantern oil.
+
+Difficulty: The game offers three difficulty levels – Rookie, Hunter, and Master Hunter. Greater difficulties mean more hazards and fewer magic arrows, but a higher score multiplier upon winning.
+
+Magic Arrows: These arrows are automatically assigned at the start based on difficulty; the harder the difficulty, the fewer received. Magic arrows pierce through multiple caves, hitting the Wumpus if it lies anywhere along the path. 
+
+Inventory: The player’s inventory holds items such as magic arrows and lantern oil refills. Open the menu using X and select “View Inventory” to see all currently held items and use them.
+
+Warning System: When the player is one cave away from a hazard, the game displays a warning message.
+A Bottomless Pit: “You feel a cold wind blowing…”
+Super Bats: “You hear the flapping of wings…”
+Wumpus: “You smell a terrible stench…”
+These warnings help the player deduce nearby dangers and plan their next move carefully. 
+
+Scoring: scores will be calculated according to the player’s remaining resources, turns used, caves explored, and difficulty played. The fewer turns used and the more arrows saved, the better the score. A difficulty multiplier is also applied.
+
+Win condition: 
+Hunt the Wumpus by successfully shooting it with an arrow.
+
+Lose conditions: 
+Lantern oil runs out 
+Arrows run out before killing the Wumpus
+The player falls into a pit 
+Players enter the Wumpus cave
+Wumpus moves into the player's cave 
