@@ -14,7 +14,7 @@ public:
 	string getHazardName() override;
 	string getHazardWarning() override;
 
-	void roam();
+	void roam(int newRoomID);
 
 	~SuperBat() override;
 private:
