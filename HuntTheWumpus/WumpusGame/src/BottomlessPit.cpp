@@ -35,7 +35,7 @@ string BottomlessPit::getHazardName() {
 }
 
 string BottomlessPit::getHazardWarning() {
-	return "You feel a cold wind blowing...";
+	return "You feel a cold wind blowing...\n";
 }
 
 BottomlessPit::~BottomlessPit() {}

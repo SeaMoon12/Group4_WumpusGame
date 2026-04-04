@@ -22,7 +22,31 @@ code.
 Student Signature: <mention your full name here>
 ********************************************************************/
 
+#include "BottomlessPit.h"
+#include "Wumpus.h"
+#include "SuperBat.h"
+
 int main()
 {
+	vector<Hazard*> hazards = { new Wumpus(0.5f), new SuperBat(0.75f), new BottomlessPit() };
+	cout << "Hazard Name: " << hazards[0]->getHazardName() << endl;
+	hazards[0]->setRoomID(5);
+	cout << hazards[0]->getHazardWarning();
+	hazards[0]->encounter();
+
+	cout << endl;
+
+	cout << "Hazard Name: " << hazards[1]->getHazardName() << endl;
+	hazards[1]->setRoomID(5);
+	cout << hazards[1]->getHazardWarning();
+	hazards[1]->encounter();
+
+	cout << endl;
+
+	cout << "Hazard Name: " << hazards[2]->getHazardName() << endl;
+	hazards[2]->setRoomID(5);
+	cout << hazards[2]->getHazardWarning();
+	hazards[2]->encounter();
+
 	return 0;
 }

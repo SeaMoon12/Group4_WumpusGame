@@ -42,4 +42,4 @@ void SuperBat::roam(int id) {
 	setRoomID(id);
 }
 
-
+SuperBat::~SuperBat() { }
