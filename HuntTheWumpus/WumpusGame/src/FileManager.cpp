@@ -31,7 +31,7 @@ FileManager::FileManager() {
 	saveFile = "saveGame.txt";
 	scoreFile = "scores.txt";
 	howToPlayFile = "howToPlay.txt";
-	storyFile = "story.txt"
+    storyFile = "story.txt";
 }
 
 string FileManager::loadHowToPlay() {
