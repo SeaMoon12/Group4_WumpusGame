@@ -2,7 +2,7 @@
 #define FILE_MANAGER_H
 
 #include "libraries.h"
-#include "Location.h"
+#include "Cave.h"
 #include "Player.h"
 #include "Hazard.h"
 
@@ -12,21 +12,24 @@ private:
     string saveFile;
     string scoreFile;
     string howToPlayFile;
+    string storyFile;
 
 public:
     FileManager();
 
-    vector<Location> loadMap();
+    vector<CaveProperties> loadMap();
 
     string loadHowToPlay();
 
     void saveGame(Player& player, vector<Hazard>& hazards, int turns);
 
-    SaveData loadGame();
+    string loadGame();
 
     void saveScore(string name, int score);
 
     string loadScores();
+
+    string loadStory();
 };
 
 #endif
