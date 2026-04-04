@@ -24,7 +24,7 @@ Student Signature: Simmon Priady Sasmita
 
 #include "SuperBat.h"
 
-SuperBat::SuperBat(float movementChance) : chanceToMove(movementChance) { }
+SuperBat::SuperBat(float movementChance) : chanceToMove(movementChance) {}
 
 void SuperBat::encounter() {
 	cout << "Super bats grab you and carry you away!\n";
@@ -41,5 +41,3 @@ string SuperBat::getHazardWarning() {
 void SuperBat::roam(int id) {
 	setRoomID(id);
 }
-
-SuperBat::~SuperBat() { }

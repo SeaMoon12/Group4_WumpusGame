@@ -23,3 +23,45 @@ Student Signature: <mention your full name here>
 ********************************************************************/
 
 #include "FileManager.h"
+#include <fstream>
+#include <iostream>
+
+FileManager::FileManager() {
+    mapFile = "map.txt";
+    saveFile = "saveGame.txt";
+    scoreFile = "scores.txt";
+    howToPlayFile = "howToPlay.txt";
+    storyFile = "story.txt";
+}
+
+string FileManager::loadHowToPlay() {
+    ifstream file(howToPlayFile);
+    string text, line;
+
+    if (!file) {
+        return "ERROR: FILE CAN'T BE FOUND";
+    }
+
+    while (getline(file, line)) {
+        text += line + "\n";
+    }
+
+    file.close();
+    return text;
+}
+
+string FileManager::loadStory() {
+    ifstream file(storyFile);
+    string text, line;
+
+    if (!file) {
+        return "ERROR: FILE CAN'T BE FOUND";
+    }
+
+    while (getline(file, line)) {
+        text += line + "\n";
+    }
+
+    file.close();
+    return text;
+}
