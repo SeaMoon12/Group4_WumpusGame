@@ -37,7 +37,6 @@ Cave::Cave(GameDifficulty gameDiff) { //weird because of UML error workarounds
 	cavePositionVector.assign(10, vector<int>(10, -1));
 	map.assign(30, string(50, ' '));	
 	cavesData.assign(cavePositionVector.size(), CaveProperties());
-	generateCaveMap();
 }
 
 //destructor
@@ -350,6 +349,9 @@ void Cave::renderMap() { //render the map based on the caveLogicVector, cavePosi
 
 				if (playerX == x and playerY == y) {
 					midString = "  O  ";
+				}
+				else if (cavesData[x].caveHazards == CaveHazards::WUMPUS) {
+					midString = "  W  ";
 				}
 				else {
 					midString = "     ";

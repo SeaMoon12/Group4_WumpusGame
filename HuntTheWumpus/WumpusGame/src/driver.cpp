@@ -21,8 +21,12 @@ code.
  zero for this assignment.
 Student Signature: <mention your full name here>
 ********************************************************************/
+#include "GameManager.h"
 
 int main()
 {
+	string playerName = "";
+	cout << "Enter your name: ";
+	cin >> playerName;
 	return 0;
 }
