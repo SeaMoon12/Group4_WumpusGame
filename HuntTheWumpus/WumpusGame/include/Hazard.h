@@ -16,7 +16,7 @@ public:
 	virtual string getHazardWarning() = 0;
 
 	// SETTERS
-	void setRoomID();
+	void setRoomID(int id);
 
 	virtual ~Hazard();
 
